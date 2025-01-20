@@ -2,18 +2,22 @@ import React from "react";
 import DocumentEditor from "./DocumentEditor";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
-
+import Footer from "./Footer";
 const Homepage = () => {
   return (
     <>
       <Navbar />
       <div className="flex h-screen">
         {/* Sidebar */}
-        <Sidebar />
+        <Sidebar/>
 
-        {/* Main Content (Editor on the Right) */}
-        <div className="flex-grow p-4">
-          <DocumentEditor />
+        {/* Main Content */}
+        <div className="flex-grow flex flex-col">
+          <div className="flex-grow p-4">
+            <DocumentEditor />
+          </div>
+          {/* Footer */}
+          <Footer/>
         </div>
       </div>
     </>
