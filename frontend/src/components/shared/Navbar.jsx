@@ -1,13 +1,25 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Button } from "../components/ui/button"; // Import the Button component from shadcn/ui
-
+import { Button } from "../ui/button"; // Import the Button component from shadcn/ui
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"; // Import Avatar
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu"; // Import DropdownMenu
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(true); // Simulate authentication status
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false); // Simulate logout
+    // Add your actual logout logic here (e.g., clear tokens, redirect, etc.)
   };
 
   return (
@@ -48,21 +60,71 @@ const Navbar = () => {
               Contact
             </Link>
 
-            {/* Login and Sign Up Buttons */}
-            <Link to="/login">
-              <Button variant="ghost" className="text-gray-300 hover:text-white">
-                Login
-              </Button>
-            </Link>
-            <Link to="/signup">
-              <Button className="bg-blue-500 hover:bg-blue-600 text-white">
-                Sign Up
-              </Button>
-            </Link>
+            {/* Conditional Rendering for Login/Sign Up or Profile Icon */}
+            {isAuthenticated ? (
+              // Profile Icon with Dropdown Menu
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                    <Avatar className="h-8 w-8">
+                      <AvatarImage src="/path-to-your-avatar-image.jpg" alt="Profile" />
+                      <AvatarFallback>U</AvatarFallback> {/* Fallback if no image */}
+                    </Avatar>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56" align="end" forceMount>
+                  <DropdownMenuItem asChild>
+                    <Link to="/profile" className="w-full">
+                      View Profile
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={handleLogout}>
+                    Logout
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              // Login and Sign Up Buttons
+              <>
+                <Link to="/login">
+                  <Button variant="ghost" className="text-gray-300 hover:bg-gray-700 hover:text-white">
+                    Login
+                  </Button>
+                </Link>
+                <Link to="/signup">
+                  <Button className="bg-blue-500 hover:bg-blue-600 text-white">
+                    Sign Up
+                  </Button>
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Hamburger Menu for Mobile */}
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center">
+            {isAuthenticated && (
+              // Profile Icon with Dropdown Menu for Mobile
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                    <Avatar className="h-8 w-8">
+                      <AvatarImage src="/path-to-your-avatar-image.jpg" alt="Profile" />
+                      <AvatarFallback>U</AvatarFallback> {/* Fallback if no image */}
+                    </Avatar>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56" align="end" forceMount>
+                  <DropdownMenuItem asChild>
+                    <Link to="/profile" className="w-full">
+                      View Profile
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={handleLogout}>
+                    Logout
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
             <Button
               onClick={toggleMenu}
               variant="ghost"
@@ -135,18 +197,6 @@ const Navbar = () => {
             className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
           >
             Contact
-          </Link>
-
-          {/* Login and Sign Up Buttons for Mobile */}
-          <Link to="/login" className="block">
-            <Button variant="ghost" className="w-full text-gray-300 hover:text-white">
-              Login
-            </Button>
-          </Link>
-          <Link to="/signup" className="block">
-            <Button className="w-full bg-blue-500 hover:bg-blue-600 text-white">
-              Sign Up
-            </Button>
           </Link>
         </div>
       </div>

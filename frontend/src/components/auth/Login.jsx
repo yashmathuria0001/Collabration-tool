@@ -1,5 +1,5 @@
 import React from 'react'
-import Navbar from '../Navbar'
+import Navbar from '../shared/Navbar'
 import { Label } from '../ui/label'
 import { Input } from '../ui/input'
 import { RadioGroup } from '../ui/radio-group'
@@ -51,7 +51,7 @@ const Login = () => {
           )}
           <span className="text-sm text-gray-400">
             Add Account?{" "}
-            <Link to="/login" className="text-blue-500 hover:text-blue-600">
+            <Link to="/signup" className="text-blue-500 hover:text-blue-600">
               Signup
             </Link>
           </span>

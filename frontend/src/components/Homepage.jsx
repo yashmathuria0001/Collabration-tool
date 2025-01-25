@@ -1,8 +1,8 @@
 import React from "react";
 import DocumentEditor from "./DocumentEditor";
-import Navbar from "./Navbar";
+import Navbar from "./shared/Navbar";
 import Sidebar from "./Sidebar";
-import Footer from "./Footer";
+import Footer from "./shared/Footer";
 const Homepage = () => {
   return (
     <>
