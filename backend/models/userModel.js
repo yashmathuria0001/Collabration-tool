@@ -17,11 +17,6 @@ const userModel = new mongoose.Schema({
             message: props => `${props.value} is not a valid email!`,
         },
     },
-    username: {
-        type: String,
-        required: true,
-        unique: true,
-    },
     password: {
         type: String,
         required: true,
@@ -35,7 +30,7 @@ const userModel = new mongoose.Schema({
         enum: ["male", "female"], // either of these values
         required: true,
     },
-    
+
     role: {
         type: String,
         enum: ["admin", "editor", "viewer"], // Role of the user in the document collaboration
