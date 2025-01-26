@@ -32,7 +32,8 @@ const DashboardPage = () => {
       <Navbar />
       <div className="flex-grow flex">
         {/* Sidebar Section */}
-        <Sidebar className="w-[250px] bg-gray-100 p-4" />
+        <div> <Sidebar className="w-[250px] bg-gray-100 p-4" /></div>
+       
         {/* Main Content Section */}
         <div className="flex-grow container mx-auto p-4">
           <h1 className="text-2xl font-bold mb-4">Dashboard</h1>

@@ -33,17 +33,20 @@ const userModel = new mongoose.Schema({
 
     role: {
         type: String,
-        enum: ["admin", "editor", "viewer"], // Role of the user in the document collaboration
+        enum: [ "editor", "viewer"], // Role of the user in the document collaboration
         default: "viewer",
     },
-    documents: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Document", // Reference to the documents the user is collaborating on
-    }],
+    projects: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Project", // Changed to reference "Project" instead of "Document"
+        },
+      ],
     lastActive: {
         type: Date,
         default: Date.now, // Timestamp for the last time the user was active
     },
+
 }, { timestamps: true });
 
 export const User = mongoose.model("User", userModel);

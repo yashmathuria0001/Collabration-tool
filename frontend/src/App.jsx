@@ -4,7 +4,7 @@ import DashboardPage from "./components/DashboardPage";
 import DocumentEditor from "./components/DocumentEditor/DocumentEditor"
 import Homepage from "./components/Homepage"
 import { createBrowserRouter,RouterProvider } from "react-router-dom"
-import ProjectsPage from "./components/ProjectsPage";
+import ProjectsPage from "./components/Projects/ProjectsPage";
 import ProfilePage from "./components/Profile/ProfilePage";
 import VideoConference from "./components/DocumentEditor/VideoConference";
 

@@ -16,10 +16,6 @@ const textModel = new mongoose.Schema(
       ref: "User", // Reference to the user who owns the document
       required: true,
     },
-    collaborators: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User", // References to users collaborating on the document
-    }],
     lastModified: {
       type: Date,
       default: Date.now, // Timestamp of when the document was last modified
@@ -36,18 +32,7 @@ const textModel = new mongoose.Schema(
         ref: "User", // User who made the change
       },
     }],
-    // Optional: To track roles in document editing
-    roles: [{
-      user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User", // Reference to the user with a specific role
-      },
-      role: {
-        type: String,
-        enum: ["admin", "editor", "viewer"],
-        default: "viewer",
-      },
-    }],
+    
   },
   { timestamps: true }
 );

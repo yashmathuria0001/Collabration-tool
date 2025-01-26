@@ -47,14 +47,20 @@ const ProfilePage = () => {
 
   const handleProfileUpdate = (updatedUser) => {
     setUser({ ...user, ...updatedUser });
-    setUpdates([{ action: "Updated profile", date: new Date().toLocaleString() }, ...updates]);
+    setUpdates([
+      { action: "Updated profile", date: new Date().toLocaleString() },
+      ...updates,
+    ]);
   };
 
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
       <div className="flex flex-grow">
-        <Sidebar className="w-[250px] bg-gray-100 p-4" />
+        <div>
+          <Sidebar className="w-[250px] bg-gray-100 p-4" />
+        </div>
+
         <div className="flex-grow container mx-auto p-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="md:col-span-2">
@@ -68,13 +74,19 @@ const ProfilePage = () => {
                     <CardTitle className="text-2xl">{user.name}</CardTitle>
                     <p className="text-gray-500">{user.email}</p>
                   </div>
-                  <EditProfileDialog user={user} onUpdate={handleProfileUpdate} />
+                  <EditProfileDialog
+                    user={user}
+                    onUpdate={handleProfileUpdate}
+                  />
                 </CardHeader>
                 <CardContent>
                   <p className="mb-4">{user.bio}</p>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <StatCard title="Projects" value={stats.projects} />
-                    <StatCard title="Collaborators" value={stats.collaborators} />
+                    <StatCard
+                      title="Collaborators"
+                      value={stats.collaborators}
+                    />
                   </div>
                 </CardContent>
               </Card>
