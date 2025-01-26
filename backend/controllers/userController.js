@@ -1,8 +1,10 @@
 import { User } from "../models/userModel.js";
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken";
+import cloudinary from '../config/cloudinary.js';
 import { sendOTP, isOTPExpired, otpStore } from "./otpController.js";
 
+// Configure Cloudinary with the credentials
 let registrationDataStore = {};
 
 export const registerUser = async (req, res) => {
@@ -21,11 +23,21 @@ export const registerUser = async (req, res) => {
         return res.status(400).json({ message: "Password must be at least 6 characters long" });
      }
 
-     let userProfilePhoto = profilePhoto || ""; 
+     let userProfilePhoto =  ""; 
 
-      if(!userProfilePhoto){
-        userProfilePhoto='../assets/male_pfp.jpg'
-      }
+     // Check if profilePhoto is provided
+    if (profilePhoto) {
+      // Upload profile photo to Cloudinary
+      const uploadedPhoto = await cloudinary.v2.uploader.upload(profilePhoto, {
+        folder: 'collab-app', // Folder for organization
+        public_id: `${email}-profile`, // You can customize the public_id
+      });
+
+      userProfilePhoto = uploadedPhoto.secure_url; // The URL of the uploaded image
+    } else {
+      // Default profile photo if none is provided
+      userProfilePhoto = '../assets/male_pfp.jpg';
+    }
 
        // Save user data temporarily
        registrationDataStore[email] = {

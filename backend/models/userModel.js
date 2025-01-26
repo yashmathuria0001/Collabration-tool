@@ -23,7 +23,7 @@ const userModel = new mongoose.Schema({
     },
     profilePhoto: {
         type: String,
-        default: "",
+        default: null,
     },
     gender: {
         type: String,
@@ -33,7 +33,7 @@ const userModel = new mongoose.Schema({
 
     role: {
         type: String,
-        enum: ["admin", "editor", "viewer"], // Role of the user in the document collaboration
+        enum: ["editor", "viewer"], // Role of the user in the document collaboration
         default: "viewer",
     },
     documents: [{
