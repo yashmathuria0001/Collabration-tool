@@ -1,9 +1,9 @@
 import { User } from "../models/userModel.js";
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken";
-import { sendOTP, isOTPExpired, otpStore } from "./otpController.js";
+import validator from 'validator';
 
-let registrationDataStore = {};
+
 
 export const registerUser = async (req, res) => {
     const { fullName, email, password, gender} = req.body;
@@ -21,116 +21,39 @@ export const registerUser = async (req, res) => {
         return res.status(400).json({ message: "Password must be at least 6 characters long" });
      }
 
-     let userProfilePhoto = profilePhoto || ""; 
+      let userProfilePhoto = profilePhoto || ""; 
 
       if(!userProfilePhoto){
         userProfilePhoto='../assets/male_pfp.jpg'
       }
-
-       // Save user data temporarily
-       registrationDataStore[email] = {
-        fullName,
-        email,
-        password,
-        profilePhoto:userProfilePhoto,
-        gender,
-    };
-
-    sendOTP(email);
      
-    return res.status(200).json({
-        message: "OTP has been sent to your email. Please verify to complete registration.",
-        success: true,
-      });
-    } catch (error) {
-        console.log(error);
-        return res.status(500).json({ message: "Server error. Please try again." });
-      }
-  };
-
-  // Step 2: Verify OTP and Complete Registration
-export const verify = async (req, res) => {
-    try {
-      const {otp } = req.body;
-  
-      if (!otp) {
-        return res.status(400).json({ message: "OTP is required" });
-      }
-
-
-    // Find the email associated with the OTP
-    const email = Object.keys(otpStore).find((key) => otpStore[key]?.otp === otp);
-
-    if (!email) {
-      return res.status(400).json({ message: "Invalid OTP." });
-    }
-
-  
-      // Check if OTP is expired or incorrect
-      if (isOTPExpired(email)) {
-        return res.status(400).json({ message: "OTP has expired. Please request a new one." });
-      }
-  
-      // Retrieve user data from the temporary store
-      const userData = registrationDataStore[email];
-      if (!userData) {
-        return res.status(400).json({ message: "User data not found. Please try again." });
-      }
-  
-      const { fullName, profilePhoto, password, gender } = userData;
-  
       // Hash the password
-      const hashedPassword = await bcrypt.hash(password, 10);
+      const hashedPassword = await bcrypt.hash(password, 12);
   
-      // Save the user permanently in the database
-      await User.create({
+      const newUser = new User({
         fullName,
         email,
         password: hashedPassword,
-        profilePhoto,
+        profilePhoto: userProfilePhoto,
         gender,
       });
   
-      // Clear temporary store and OTP store
-      delete registrationDataStore[email];
-      delete otpStore[email];
-  
-      return res.status(201).json({
-        message: "Account created successfully!",
-        success: true,
-      });
-    } catch (error) {
-      console.log(error);
-      return res.status(500).json({ message: "Server error. Please try again." });
-    }
-  };
+      // Save user to the database
+      await newUser.save();
 
-  export const resendOTP = async (req, res) => {
-    try {
-        // Retrieve the email directly from registrationDataStore
-        const { email } = req.body;
+      // Generate JWT token
+      const token = jwt.sign(
+          { userId: newUser._id, email: newUser.email },
+          process.env.JWT_SECRET_KEY,
+          { expiresIn: '1h' }
+      );
 
-        if (!email) {
-            return res.status(400).json({ message: "Email not found. Please register first." });
-        }
-
-        // Check if OTP for the email already exists and is not expired
-        if (otpStore[email] && !isOTPExpired(email)) {
-          delete otpStore[email];
-        }
-
-        // Send OTP to the email
-        sendOTP(email); // Resend OTP using the existing sendOTP function
-
-        return res.status(200).json({
-            message: "OTP has been resent to your email.",
-            success: true,
-        });
+      res.status(201).json({ message: "User registered successfully!", token });
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ message: "Server error. Please try again." });
+        res.status(500).json({ message: "Server error" });
     }
-};
+  };
 
   export const login= async(req,res)=>{
     try{
