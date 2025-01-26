@@ -6,7 +6,7 @@ import validator from 'validator';
 
 
 export const registerUser = async (req, res) => {
-    const { fullName, email, password, gender, profilePhoto } = req.body;
+    const { fullName, email, password, gender} = req.body;
 
     try {
 

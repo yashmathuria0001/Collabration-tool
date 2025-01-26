@@ -1,13 +1,14 @@
-import React, { useState, useEffect, useCallback } from "react"
+import React, { useState, useCallback } from "react"
 import Quill from "quill"
 import "quill/dist/quill.snow.css"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from "sonner"
+import VideoConference from "./VideoConference"
+import InviteCollaboratorForm from "./InviteCollaboratorForm"
+import CollaboratorsList from "./CollaboratorsList"
 
 const TOOLBAR_OPTIONS = [
   [{ header: [1, 2, 3, 4, 5, 6, false] }],
@@ -65,9 +66,10 @@ const DocumentEditor = ({ documentId }) => {
 
   return (
     <div className="container mx-auto p-4">
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-4">
         <h1 className="text-2xl font-bold">Document Editor</h1>
-        <div className="space-x-2">
+        <div className="flex flex-wrap gap-2">
+          <VideoConference />
           <Dialog>
             <DialogTrigger asChild>
               <Button variant="outline">Invite Collaborator</Button>
@@ -83,7 +85,7 @@ const DocumentEditor = ({ documentId }) => {
         </div>
       </div>
       <div className="border rounded-lg mb-4">
-        <div ref={wrapperRef} className="h-[400px]"></div>
+        <div ref={wrapperRef} className="h-[calc(100vh-300px)] min-h-[400px]"></div>
       </div>
       <CollaboratorsList collaborators={collaborators} />
 
@@ -106,56 +108,6 @@ const DocumentEditor = ({ documentId }) => {
           </div>
         </DialogContent>
       </Dialog>
-    </div>
-  )
-}
-
-const InviteCollaboratorForm = ({ onInvite }) => {
-  const [email, setEmail] = useState("")
-  const [role, setRole] = useState("reader")
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    onInvite(email, role)
-    setEmail("")
-    setRole("reader")
-  }
-
-  return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div>
-        <Label htmlFor="email">Email</Label>
-        <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-      </div>
-      <div>
-        <Label htmlFor="role">Role</Label>
-        <Select value={role} onValueChange={setRole}>
-          <SelectTrigger>
-            <SelectValue placeholder="Select a role" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="reader">Reader</SelectItem>
-            <SelectItem value="editor">Editor</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-      <Button type="submit">Invite</Button>
-    </form>
-  )
-}
-
-const CollaboratorsList = ({ collaborators }) => {
-  return (
-    <div>
-      <h2 className="text-xl font-semibold mb-2">Collaborators</h2>
-      <ul className="space-y-2">
-        {collaborators.map((collaborator, index) => (
-          <li key={index} className="flex justify-between items-center bg-gray-100 p-2 rounded">
-            <span>{collaborator.email}</span>
-            <span className="text-sm text-gray-500 capitalize">{collaborator.role}</span>
-          </li>
-        ))}
-      </ul>
     </div>
   )
 }

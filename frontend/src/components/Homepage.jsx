@@ -1,5 +1,5 @@
 import React from "react";
-import DocumentEditor from "./DocumentEditor";
+import DocumentEditor from "./DocumentEditor/DocumentEditor";
 import Navbar from "./shared/Navbar";
 import Sidebar from "./shared/Sidebar";
 import Footer from "../components/shared/Footer";

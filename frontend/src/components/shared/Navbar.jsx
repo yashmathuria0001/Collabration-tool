@@ -1,29 +1,24 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { Button } from "../ui/button"; // Import the Button component from shadcn/ui
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"; // Import Avatar
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "../ui/dropdown-menu"; // Import DropdownMenu
+import React, { useState } from "react"
+import { Link } from "react-router-dom"
+import { Button } from "../ui/button"
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu"
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(true); // Simulate authentication status
+  const [isOpen, setIsOpen] = useState(false)
+  const [isAuthenticated, setIsAuthenticated] = useState(true)
 
   const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
+    setIsOpen(!isOpen)
+  }
 
   const handleLogout = () => {
-    setIsAuthenticated(false); // Simulate logout
+    setIsAuthenticated(false)
     // Add your actual logout logic here (e.g., clear tokens, redirect, etc.)
-  };
+  }
 
   return (
-    <nav className="bg-gray-800">
+    <nav className="bg-gray-800 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
@@ -35,28 +30,16 @@ const Navbar = () => {
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-4">
-            <Link
-              to="/features"
-              className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-            >
+            <Link to="/features" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
               Features
             </Link>
-            <Link
-              to="/"
-              className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-            >
+            <Link to="/" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
               Editor
             </Link>
-            <Link
-              to="/about"
-              className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-            >
+            <Link to="/about" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
               About
             </Link>
-            <Link
-              to="/contact"
-              className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-            >
+            <Link to="/contact" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
               Contact
             </Link>
 
@@ -68,7 +51,7 @@ const Navbar = () => {
                   <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                     <Avatar className="h-8 w-8">
                       <AvatarImage src="/path-to-your-avatar-image.jpg" alt="Profile" />
-                      <AvatarFallback>U</AvatarFallback> {/* Fallback if no image */}
+                      <AvatarFallback>U</AvatarFallback>
                     </Avatar>
                   </Button>
                 </DropdownMenuTrigger>
@@ -78,9 +61,7 @@ const Navbar = () => {
                       View Profile
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={handleLogout}>
-                    Logout
-                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
@@ -92,9 +73,7 @@ const Navbar = () => {
                   </Button>
                 </Link>
                 <Link to="/signup">
-                  <Button className="bg-blue-500 hover:bg-blue-600 text-white">
-                    Sign Up
-                  </Button>
+                  <Button className="bg-blue-500 hover:bg-blue-600 text-white">Sign Up</Button>
                 </Link>
               </>
             )}
@@ -109,7 +88,7 @@ const Navbar = () => {
                   <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                     <Avatar className="h-8 w-8">
                       <AvatarImage src="/path-to-your-avatar-image.jpg" alt="Profile" />
-                      <AvatarFallback>U</AvatarFallback> {/* Fallback if no image */}
+                      <AvatarFallback>U</AvatarFallback>
                     </Avatar>
                   </Button>
                 </DropdownMenuTrigger>
@@ -119,9 +98,7 @@ const Navbar = () => {
                       View Profile
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={handleLogout}>
-                    Logout
-                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             )}
@@ -141,12 +118,7 @@ const Navbar = () => {
                 stroke="currentColor"
                 aria-hidden="true"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h16m-7 6h7"
-                />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7" />
               </svg>
               <svg
                 className={`${isOpen ? "block" : "hidden"} h-6 w-6`}
@@ -156,12 +128,7 @@ const Navbar = () => {
                 stroke="currentColor"
                 aria-hidden="true"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M6 18L18 6M6 6l12 12"
-                />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
               </svg>
             </Button>
           </div>
@@ -169,10 +136,7 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Menu */}
-      <div
-        className={`${isOpen ? "block" : "hidden"} md:hidden`}
-        id="mobile-menu"
-      >
+      <div className={`${isOpen ? "block" : "hidden"} md:hidden`} id="mobile-menu">
         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
           <Link
             to="/features"
@@ -180,16 +144,10 @@ const Navbar = () => {
           >
             Features
           </Link>
-          <Link
-            to="/"
-            className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-          >
+          <Link to="/" className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
             Editor
           </Link>
-          <Link
-            to="/about"
-            className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-          >
+          <Link to="/about" className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
             About
           </Link>
           <Link
@@ -201,7 +159,8 @@ const Navbar = () => {
         </div>
       </div>
     </nav>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar
+

@@ -10,7 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import Footer from "./shared/Footer";
 import Navbar from "./shared/Navbar";
-import Sidebar from "./shared/Sidebar";
+import Sidebar from "../components/shared/Sidebar";
 
 const ProjectCard = ({ project }) => (
   <Card className="w-[300px]">
